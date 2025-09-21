@@ -1,0 +1,38 @@
+*.pyc
+__pycache__/
+.env
+db.sqlite3
+/static/
+/staticfiles/
+/media/
+*.log
+.idea/
+.vscode/
+*.json
+.env
+
+# Gizli dosyalar ve klasörler
+*.json
+*.env
+*.key
+*.pem
+
+# Django dosyaları
+db.sqlite3
+__pycache__/
+*.pyc
+
+# IDE klasörleri
+.idea/
+.vscode/
+
+# Static/media dosyaları (isteğe bağlı)
+static/
+media/
+
+*.json
+.env
+*.key
+*.pem
+firebase-adminsdk-*.json
+

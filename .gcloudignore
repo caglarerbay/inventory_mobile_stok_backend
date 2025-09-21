@@ -1,0 +1,7 @@
+# Sanal ortam ve backup’ını yollama
+env/
+env_backup/
+
+# Python cache dosyaları
+__pycache__/
+*.pyc

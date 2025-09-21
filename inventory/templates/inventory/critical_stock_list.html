@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Kritik Stok Ürünleri</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Kritik Stok Ürünleri</h1>
+    <table>
+        <tr>
+            <th>Parça Kodu</th>
+            <th>Ürün İsmi</th>
+            <th>Mevcut Adet</th>
+            <th>Minimum Limit</th>
+            <th>Sipariş Durumu</th>
+        </tr>
+        {% for product in critical_products %}
+        <tr>
+            <td>{{ product.part_code }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.min_limit }}</td>
+            <td>
+                {% if product.order_placed %}
+                    Siparişi çekildi, tedariği bekleniyor.
+                {% else %}
+                    Kritik stok, sipariş henüz çekilmedi.
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Kritik stok durumu yok.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        <a href="{% url 'send_excel_report' %}">Kritik Stok Uyarı Maili Gönder</a>
+    </p>
+    <p><a href="{% url 'index' %}">Ana Sayfaya Dön</a></p>
+</body>
+</html>

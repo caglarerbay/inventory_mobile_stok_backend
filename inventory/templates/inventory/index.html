@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Stok Takip Sistemi</title>
+</head>
+<body>
+    <h1>Ana Stok Listesi</h1>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.part_code }} - {{ product.name }}: {{ product.quantity }} adet</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

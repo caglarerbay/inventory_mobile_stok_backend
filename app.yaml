@@ -1,0 +1,18 @@
+runtime: python310
+env: standard
+
+entrypoint: bash -c "python manage.py migrate || true; python manage.py collectstatic --noinput; gunicorn -b :$PORT --timeout 600 --workers 2 myinventory.wsgi"
+
+beta_settings:
+  cloud_sql_instances: nukstoktakip25:europe-west6:nukstoktakipsql
+
+env_variables:
+  DB_HOST: /cloudsql/nukstoktakip25:europe-west6:nukstoktakipsql
+  DB_NAME: stokdb
+  DB_USER: postgres
+  DB_PASS: Ccfizik.4
+  DJANGO_SETTINGS_MODULE: myinventory.settings
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 5

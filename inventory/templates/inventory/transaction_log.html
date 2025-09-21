@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Stok İşlem Logları</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Stok İşlem Logları</h1>
+    <table>
+        <tr>
+            <th>Tarih</th>
+            <th>İşlem Türü</th>
+            <th>Ürün</th>
+            <th>Miktar</th>
+            <th>Kullanıcı</th>
+            <th>Hedef Kullanıcı</th>
+            <th>Ana Stok (İşlem Sonrası)</th>
+            <th>Kullanıcı Stoğu (İşlem Sonrası)</th>
+            <th>Alıcı Stoğu (Transfer İçin)</th>
+            <th>Açıklama</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.transaction_type }}</td>
+            <td>{{ log.product }}</td>
+            <td>{{ log.quantity }}</td>
+            <td>{{ log.user }}</td>
+            <td>{{ log.target_user }}</td>
+            <td>{% if log.current_quantity != None %}{{ log.current_quantity }}{% else %}-{% endif %}</td>
+            <td>{% if log.current_user_quantity != None %}{{ log.current_user_quantity }}{% else %}-{% endif %}</td>
+            <td>{% if log.current_receiver_quantity != None %}{{ log.current_receiver_quantity }}{% else %}-{% endif %}</td>
+            <td>{{ log.description }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="10">Hiç işlem yapılmamış.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="{% url 'index' %}">Ana Sayfaya Dön</a></p>
+</body>
+</html>

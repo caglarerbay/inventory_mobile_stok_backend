@@ -1,0 +1,37 @@
+git add .
+git commit -m "Yeni özellik eklendi"
+git push
+
+anahtar ile servera bağlanma///
+ssh -i /c/Users/LENOVO/stoktakip_anahtari.pem ec2-user@nukstoktakip.eu-north-1.elasticbeanstalk.com
+
+dosya izinlerini kontrol et
+ls -l /var/app/current/db.sqlite3
+--eğer izinler rw rw rw ise ***devam
+**değilse 
+sudo chmod 666 /var/app/current/db.sqlite3 
+--izinleri aç ve tekrar kontrol et
+
+***devam ( bu kodlar 2. git bash ta yazılacak)
+db dosyasını yerele indir
+scp -i /c/Users/LENOVO/stoktakip_anahtari.pem ec2-user@nukstoktakip.eu-north-1.elasticbeanstalk.com:/var/app/current/db.sqlite3 ./db.sqlite3
+
+güncelleme bittikten sonra db dosyasını geri yükle
+scp -i /c/Users/LENOVO/stoktakip_anahtari.pem ./db.sqlite3 ec2-user@nukstoktakip.eu-north-1.elasticbeanstalk.com:/var/app/current/db.sqlite3
+
+
+
+doğrudan yedek alma haftalık yapılabilir  /// giriş yapıldıktan sonra kullanılacak
+sunucuda yedek alma komutu
+
+scp -i /c/Users/LENOVO/stoktakip_anahtari.pem ec2-user@nukstoktakip.eu-north-1.elasticbeanstalk.com:/var/app/current/db.sqlite3 ./db_backup.sqlite3
+
+
+bilgisayara yedek alma komutu
+
+
+
+gitbash shellde toen görme
+
+from inventory.models import Device
+Device.objects.all().values_list('user__username', 'device_token')
