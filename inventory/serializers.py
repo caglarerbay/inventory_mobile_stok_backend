@@ -274,12 +274,24 @@ class DevicePartUsageSerializer(serializers.ModelSerializer):
     product_code = serializers.CharField(source='product.part_code', read_only=True)
     product_name = serializers.CharField(source='product.name', read_only=True)
     user_username = serializers.CharField(source='user.username', read_only=True)
+    product_price = serializers.SerializerMethodField()  # ✅ fiyatı buradan çekiyoruz
 
     class Meta:
         model = DevicePartUsage
         fields = [
             'id', 'device', 'device_serial',
             'product', 'product_code', 'product_name',
-            'quantity', 'user', 'user_username', 'used_at'
+            'quantity', 'user', 'user_username', 'used_at',
+            'product_price'
         ]
-        read_only_fields = ['used_at', 'device_serial', 'product_code', 'product_name', 'user_username']
+        read_only_fields = [
+            'used_at', 'device_serial', 'product_code',
+            'product_name', 'user_username', 'product_price'
+        ]
+
+    def get_product_price(self, obj):
+        code = obj.product.part_code if obj.product else None
+        if not code:
+            return None
+        ext = ExternalProduct.objects.filter(part_code=code).first()
+        return ext.unit_price if ext else None
